@@ -1,6 +1,6 @@
 import random
-
 from os import listdir
+
 import pygame
 from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_UP, QUIT
 
@@ -26,7 +26,7 @@ IMGS_PATH = 'goose'
 # ball= pygame.Surface((20,20))
 # ball.fill((WHITE))
 
-player_images=[pygame.image.load(IMGS_PATH+'/'+file).convert_alpha() for file in listdir()]
+player_images=[pygame.transform.scale(pygame.image.load(IMGS_PATH + '/' + file).convert_alpha(),(40,60)) for file in listdir(IMGS_PATH)]
 
 player = player_images[0]
 player_rect = player.get_rect()
@@ -34,7 +34,7 @@ player_speed= 5
 
 
 def creat_enemy():
-    enemy = pygame.image.load('enemy.png').convert_alpha()
+    enemy = pygame.transform.scale(pygame.image.load('enemy.png').convert_alpha(),(40,40))
     # enemy.fill(RED)
     enemy_rect=pygame.Rect(width,random.randint(0,height), *enemy.get_size())
     enemy_speed = random.randint(2,5)
@@ -46,7 +46,7 @@ bgX2 = bg.get_width()
 bg_speed = 10
 
 def creat_bonus():
-    bonus = pygame.image.load('bonus.png').convert_alpha()
+    bonus = pygame.transform.scale(pygame.image.load('bonus.png').convert_alpha(),(60,60))
     # bonus.fill(GREEN)
     bonus_rect=pygame.Rect(random.randint(0,height),0, *bonus.get_size())
     bonus_speed = random.randint(2,5)
@@ -86,7 +86,7 @@ while is_working:
             if img_index == len(player_images):
                 img_index = 0
             
-            player = player_images[img_index]
+            player =  player_images[img_index]
     
     pressed_keys = pygame.key.get_pressed()
         
@@ -106,7 +106,7 @@ while is_working:
         
     main_surface.blit(player, player_rect)
     
-    main_surface.blit(font.render(str(countBonus),True,WHITE),(width-30,0))
+    main_surface.blit(font.render(str(countBonus),True,BLUE),(width-30,0))
     
     for enemy in enemies:
         enemy[1]=enemy[1].move(-enemy[2],0)
